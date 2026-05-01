@@ -22,7 +22,16 @@ export default function TicketInteraction({ onBack }) {
   return (
     <div className="interaction-page">
       <img className="int-bg" src={IMG_BG} alt="" />
-      <img className="int-table" src={IMG_TABLE} alt="" />
+      <div style={{
+        position: 'absolute',
+        width: '392px',
+        height: '699px',
+        top: '81px',
+        left: 0,
+        zIndex: 3,
+        background: 'url(/images/v2_3.png) no-repeat center/cover',
+        pointerEvents: 'none',
+      }} />
       <img className="int-disperse" src={IMG_DISPERSE} alt="" />
 
       {/* 机票本体 */}

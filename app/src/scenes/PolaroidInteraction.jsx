@@ -4,7 +4,16 @@ export default function PolaroidInteraction({ onBack, onPolaroid1, onPolaroid2 }
   return (
     <div className="interaction-page">
       <img className="int-bg" src="/images/v2_2.png" alt="" />
-      <img className="int-table" src="/images/v2_3.png" alt="" />
+      <div style={{
+        position: 'absolute',
+        width: '392px',
+        height: '699px',
+        top: '81px',
+        left: 0,
+        zIndex: 3,
+        background: 'url(/images/v2_3.png) no-repeat center/cover',
+        pointerEvents: 'none',
+      }} />
       <img className="int-disperse" src="/images/物品退散-拍立得.png" alt="" />
 
       {/* 退散背景大图（占满屏） */}
