@@ -28,7 +28,7 @@ export default function PolaroidInteraction({ onBack, onPolaroid1, onPolaroid2 }
       {/* 拍立得2 - 另一处倾斜 */}
       <div className="polaroid-int-p2" onClick={onPolaroid2}>
         <div className="polaroid-int-p2-base" />
-        <img className="polaroid-int-p2-img" src="/images/v2_25.png" alt="" />
+        <img className="polaroid-int-p2-img" src="/images/拍立得2默认.png" alt="" />
       </div>
 
       {/* 贴纸固定位置矩形 */}

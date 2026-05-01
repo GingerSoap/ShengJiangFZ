@@ -7,7 +7,7 @@ export default function Polaroid2Interaction({ onBack }) {
 
       {/* 拍立得主体 */}
       <div className="polaroid2-int">
-        <img className="polaroid2-int-img" src="/images/v2_25.png" alt="" />
+        <img className="polaroid2-int-img" src="/images/拍立得2默认.png" alt="" />
         <div className="polaroid2-int-base" />
       </div>
 
