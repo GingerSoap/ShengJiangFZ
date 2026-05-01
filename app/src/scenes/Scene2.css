@@ -251,8 +251,8 @@
 
 /* ========== 拍立得2 (v2_23) ========== */
 .scene2__polaroid-2 {
-  width: 229px;
-  height: 305px;
+  width: 190px;
+  height: 253px;
   position: absolute;
   top: 430px;
   left: 7px;
@@ -260,29 +260,10 @@
   cursor: pointer;
 }
 
-.polaroid-2-base {
-  width: 189px;
-  height: 197px;
-  background-color: #337987;
-  position: absolute;
-  top: 41px;
-  left: 15px;
-  overflow: hidden;
-}
-
 .polaroid-2-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
-.polaroid-2-frame {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0px;
-  left: -10px;
-  background: url("/images/拍立得2默认.png") no-repeat center center / cover;
 }
 
 /* ========== 铅笔 (v2_17) ========== */

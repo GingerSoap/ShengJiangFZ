@@ -106,8 +106,7 @@ export default function Scene2() {
 
         {/* ========== 拍立得2 ========== */}
         <div className="scene2__polaroid-2" onClick={() => goTo('polaroid-int')}>
-          <div className="polaroid-2-base" />
-          <div className="polaroid-2-frame" />
+          <img className="polaroid-2-img" src="/images/拍立得2默认.png" alt="" />
         </div>
 
         {/* ========== 铅笔 ========== */}
