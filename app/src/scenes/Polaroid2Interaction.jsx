@@ -4,6 +4,8 @@ export default function Polaroid2Interaction({ onBack }) {
   return (
     <div className="interaction-page">
       <img className="int-bg" src="/images/v2_2.png" alt="" />
+      <img className="int-table" src="/images/v2_3.png" alt="" />
+      <img className="int-disperse" src="/images/物品退散-拍立得.png" alt="" />
 
       {/* 拍立得主体 */}
       <div className="polaroid2-int">
