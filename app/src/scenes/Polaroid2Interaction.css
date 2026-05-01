@@ -1,64 +1,64 @@
 @import './interaction-base.css';
 
-.polaroid2-int {
+/* ========== 相机 - 居中偏左，旋转90度 ========== */
+.p2-camera {
   position: absolute;
-  left: 176px;
-  top: 504px;
-  width: 190px;
-  height: 253px;
-  z-index: 12;
+  left: 10px;
+  top: 180px;
+  width: 300px;
+  transform: rotate(90deg);
+  z-index: 4;
+  pointer-events: none;
 }
 
-.polaroid2-int-img {
+/* ========== 拍立得底图容器 ========== */
+.p2-polaroid-wrap {
+  position: absolute;
+  left: 70px;
+  top: 490px;
+  width: 200px;
+  height: 243px;
+  z-index: 5;
+}
+
+.p2-polaroid-base {
   position: absolute;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  pointer-events: none;
 }
 
-/* 文字框1 */
-.polaroid2-int-box1 {
+.p2-polaroid-effect {
   position: absolute;
-  left: 16px;
-  top: 48px;
-  width: 233px;
-  height: 187px;
-  background: #d9d9d9;
-  z-index: 12;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
 }
 
-/* 文字框2 */
-.polaroid2-int-box2 {
+/* ========== 标题 ========== */
+.p2-title {
   position: absolute;
-  left: 16px;
-  top: 257px;
-  width: 233px;
-  height: 187px;
-  background: #d9d9d9;
-  z-index: 12;
-}
-
-/* 竖排文字 */
-.polaroid2-int-text {
-  position: absolute;
-  left: 249px;
-  top: 101px;
-  width: 116px;
+  right: 20px;
+  top: 30px;
   font-family: 'ZhaohuaMinA', serif;
   font-weight: 700;
   font-size: 64px;
   line-height: 67px;
   color: #000000;
-  writing-mode: vertical-rl;
-  text-align: right;
   z-index: 13;
   pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
+.p2-title-main { color: #000000; }
+.p2-title-num { color: #337987; }
 
-.cyan { color: #337987; }
-
+/* 隐藏旧元素 */
 .int-table,
 .int-disperse { display: none; }

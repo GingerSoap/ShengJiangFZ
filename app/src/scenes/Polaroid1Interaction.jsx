@@ -31,6 +31,12 @@ export default function Polaroid1Interaction({ onBack }) {
       {/* 右边4:5文本框 */}
       <div className="p1-note-box" />
 
+      {/* 标题 */}
+      <div className="p1-title">
+        <span className="p1-title-main">旅行日志</span>
+        <span className="p1-title-num">01</span>
+      </div>
+
       {/* 返回 */}
       <div className="int-back" onClick={onBack}>
         <img className="int-back-img" src="/images/便签.png" alt="" />

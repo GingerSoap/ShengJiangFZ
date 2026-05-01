@@ -93,6 +93,25 @@
   z-index: 5;
 }
 
+/* ========== 标题 ========== */
+.p1-title {
+  position: absolute;
+  right: 20px;
+  top: 30px;
+  font-family: 'ZhaohuaMinA', serif;
+  font-weight: 700;
+  font-size: 64px;
+  line-height: 67px;
+  color: #000000;
+  z-index: 13;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.p1-title-main { color: #000000; }
+.p1-title-num { color: #337987; }
+
 /* 隐藏旧元素 */
 .int-table,
 .int-disperse,
