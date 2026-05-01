@@ -69,3 +69,5 @@
 
 .cyan { color: #337987; }
 
+.int-table,
+.int-disperse { display: none; }
