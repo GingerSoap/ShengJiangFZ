@@ -20,7 +20,7 @@ export default function PostcardInteraction({ onBack, onTransition, onReveal, po
   }
 
   return (
-    <div className="interaction-page">
+    <div className="interaction-page pc-fade-in">
       <img className="int-bg" src="./images/v2_2.png" alt="" />
 
       {/* 明信片卡片 */}

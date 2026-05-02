@@ -77,7 +77,7 @@ export default function Polaroid2Interaction({ onBack, onPostcard, polaroid2Imag
     }
   }, [])
 
-  const showDetect = phase === 'detect' || phase === 'callout'
+  const showDetect = phase === 'detect' || phase === 'callout' || phase === 'text3'
   const showText1 = phase !== 'initial' && phase !== 'text3'
 
   const polaroidSrc = phase === 'initial'

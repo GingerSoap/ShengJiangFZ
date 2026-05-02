@@ -129,6 +129,16 @@
   100% { opacity: 1; transform: scale(1) rotate(0deg); }
 }
 
+/* ========== 淡入入场 ========== */
+.pc-fade-in {
+  animation: pcFadeIn 0.5s ease-out both;
+}
+
+@keyframes pcFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
 /* 隐藏旧元素 */
 .int-table,
 .int-disperse { display: none; }
