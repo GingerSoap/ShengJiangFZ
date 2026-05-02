@@ -97,7 +97,7 @@ export default function Polaroid2Interaction({ onBack, onPostcard, polaroid2Imag
             <animate attributeName="baseFrequency" values="0.75;0.8;0.7;0.75" dur="0.4s" repeatCount="indefinite" />
             <animate attributeName="seed" values="1;5;3;8;1" dur="0.6s" repeatCount="indefinite" />
           </feTurbulence>
-          <feColorMatrix type="matrix" values="1 0 0 0 0  1 0 0 0 0  1 0 0 0 0  0 0 0 0.45 0" />
+          <feColorMatrix type="matrix" values="1 0 0 0 0  1 0 0 0 0  1 0 0 0 0  0 0 0 0.25 0" />
         </filter>
       </svg>
 
@@ -105,6 +105,9 @@ export default function Polaroid2Interaction({ onBack, onPostcard, polaroid2Imag
       {phase !== 'initial' && (
         <div className="p2-scene-rect" style={{ backgroundImage: `url(${polaroidSrc})` }} />
       )}
+
+      {/* 噪点层 - 全屏 */}
+      <div className="p2-noise-overlay" />
 
       {/* 白色矩形 5:4 */}
       <div
@@ -162,7 +165,6 @@ export default function Polaroid2Interaction({ onBack, onPostcard, polaroid2Imag
       {/* 相机 + 拍立得底图 */}
       <div className="p2-media-group">
         <img className="p2-camera" src="./images/相机.png" alt="" />
-        <div className="p2-noise-overlay" />
         <div className="p2-polaroid-wrap" onClick={handleCameraClick}>
           <div className="p2-polaroid-bg" style={{ backgroundImage: `url(${polaroidSrc})` }} />
           <div className="p2-polaroid-photo">
