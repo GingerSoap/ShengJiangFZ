@@ -9,6 +9,33 @@
   transform: none !important;
 }
 
+/* ========== 共享入场/退场动画（内层wrapper，避免与外层!important冲突） ========== */
+.int-slide-wrap {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+}
+
+.int-slide-in .int-slide-wrap {
+  animation: intSlideIn 0.35s ease-out both;
+}
+
+@keyframes intSlideIn {
+  from { transform: translateY(852px); }
+  to   { transform: translateY(0); }
+}
+
+.int-slide-out .int-slide-wrap {
+  animation: intSlideOut 0.35s ease-in forwards;
+}
+
+@keyframes intSlideOut {
+  from { transform: translateY(0); }
+  to   { transform: translateY(852px); }
+}
+
 .int-bg {
   position: absolute;
   width: 393px;
@@ -110,5 +137,5 @@
   justify-content: center;
   font-family: 'ZhaohuaMinA', serif;
   font-size: 14px;
-  color: #fff;
+  color: #999;
 }

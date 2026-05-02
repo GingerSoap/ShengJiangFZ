@@ -1,0 +1,134 @@
+@import './interaction-base.css';
+
+/* ========== 明信片卡片容器 ========== */
+.pc-card-wrap {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 340px;
+  z-index: 4;
+  perspective: 800px;
+}
+
+.pc-card-inner {
+  width: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease;
+}
+
+.pc-card-wrap--flipped .pc-card-inner {
+  transform: rotateY(180deg);
+}
+
+.pc-card-face {
+  width: 100%;
+  display: block;
+  backface-visibility: hidden;
+}
+
+.pc-card-face--front {
+  position: relative;
+  pointer-events: auto;
+}
+
+.pc-card-wrap--flipped .pc-card-face--front {
+  pointer-events: none;
+}
+
+.pc-card-face--back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: rotateY(180deg);
+  pointer-events: none;
+}
+
+.pc-card-wrap--flipped .pc-card-face--back {
+  pointer-events: auto;
+}
+
+.pc-card-front-img {
+  width: 100%;
+  display: block;
+  filter: drop-shadow(2px 2px 6px rgba(0, 0, 0, 0.35));
+}
+
+.pc-card-back-img {
+  width: 100%;
+  display: block;
+}
+
+/* ========== 背面输入 ========== */
+.pc-card-input {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border: none;
+  border-bottom: 1px dashed #999;
+  background: transparent;
+  font-family: 'ZhaohuaMinA', serif;
+  font-size: 14px;
+  font-style: italic;
+  color: #999;
+  outline: none;
+  text-align: center;
+  width: 70%;
+  padding: 4px 0;
+}
+.pc-card-input::placeholder {
+  color: #aaa;
+  font-style: italic;
+}
+
+/* ========== 背面右上角正方形 ========== */
+.pc-back-square {
+  position: absolute;
+  right: 16px;
+  top: 10px;
+  width: 64px;
+  height: 64px;
+  background: url("/images/邮票.png") no-repeat center center / cover;
+}
+
+/* ========== 矩形 ========== */
+.pc-rect {
+  position: absolute;
+  left: 12px;
+  top: 18px;
+  width: 215px;
+  height: 200px;
+  border: 2px solid #0011ff;
+  background: rgba(0, 17, 255, 0.08);
+  overflow: hidden;
+}
+.pc-rect1 {
+  display: none;
+}
+.pc-rect2 {
+  display: none;
+}
+
+/* ========== 盖章动效 ========== */
+.pc-stamp {
+  position: absolute;
+  right: 30px;
+  bottom: 100px;
+  width: 160px;
+  z-index: 20;
+  pointer-events: none;
+  animation: pcStamp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes pcStamp {
+  0%   { opacity: 0; transform: scale(3) rotate(-15deg); }
+  60%  { opacity: 1; transform: scale(0.9) rotate(2deg); }
+  80%  { transform: scale(1.05) rotate(-1deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+/* 隐藏旧元素 */
+.int-table,
+.int-disperse { display: none; }

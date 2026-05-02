@@ -37,13 +37,32 @@
   transform: none !important;
 }
 
+/* ========== 编辑入口按钮 ========== */
+.scene2__edit-btn {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #337987;
+  cursor: pointer;
+  z-index: 100;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+.scene2__edit-btn:hover {
+  opacity: 0.8;
+}
+
 /* ========== 背景图 (v2_2) ========== */
 .scene2__bg {
   width: 393px;
   height: 869px;
   background: url("/images/v2_2.png") no-repeat center center / cover;
   position: absolute;
-  top: 17px;
+  top: 0px;
   left: 0px;
   overflow: hidden;
 }
@@ -225,10 +244,20 @@
   z-index: 2;
 }
 
+.polaroid-1-bg {
+  width: 189px;
+  height: 197px;
+  background: url("/images/巴黎拍立得1背景.png") no-repeat center center / cover;
+  position: absolute;
+  top: 41px;
+  left: 15px;
+  overflow: hidden;
+}
+
 .polaroid-1-base {
   width: 189px;
   height: 197px;
-  background-color: #337987;
+  background: url("/images/巴黎拍立得1背景.png") no-repeat center center / cover;
   position: absolute;
   top: 41px;
   left: 15px;
@@ -252,20 +281,83 @@
 
 /* ========== 拍立得2 (v2_23) ========== */
 .scene2__polaroid-2 {
-  width: 200px;
-  height: 260px;
+  width: 229px;
+  height: 305px;
   position: absolute;
   top: 430px;
-  left: 10px;
+  left: -5px;
   overflow: hidden;
   cursor: pointer;
   z-index: 1;
+  transition: top 0.6s ease;
+}
+
+.scene2__canvas--revealed .scene2__polaroid-2 {
+  top: 365px;
+}
+
+.polaroid-2-bg {
+  width: 189px;
+  height: 197px;
+  background: url("/images/巴黎剧场2.png") no-repeat center center / cover;
+  position: absolute;
+  top: 41px;
+  left: 15px;
+  overflow: hidden;
+}
+
+.polaroid-2-base {
+  width: 189px;
+  height: 197px;
+  background: url("/images/巴黎剧场2.png") no-repeat center center / cover;
+  position: absolute;
+  top: 41px;
+  left: 15px;
+  overflow: hidden;
 }
 
 .polaroid-2-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.polaroid-2-frame {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  background: url("/images/v2_21.png") no-repeat center center / cover;
+  pointer-events: none;
+}
+
+.polaroid-2-noise {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+/* ========== 邮票（揭示后出现） ========== */
+.scene2__stamp {
+  position: absolute;
+  top: 640px;
+  left: 45%;
+  transform: translateX(-50%);
+  width: 72px;
+  height: 72px;
+  cursor: pointer;
+  z-index: 10;
+  animation: stamp-appear 0.5s ease-out both;
+}
+
+@keyframes stamp-appear {
+  from { opacity: 0; transform: translateX(-50%) translateY(10px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
 }
 
 /* ========== 铅笔 (v2_17) ========== */

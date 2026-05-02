@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { transitionPageText } from '../data/transitionPage'
 import './TransitionScene.css'
 
-const IMG_BG = '/images/过渡页背景.png'
+const IMG_BG = './images/过渡页背景.png'
 
 export default function TransitionScene({ onComplete }) {
   const [visibleCount, setVisibleCount] = useState(0)

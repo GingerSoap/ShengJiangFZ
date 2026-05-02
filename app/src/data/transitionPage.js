@@ -1,7 +1,6 @@
-// 过滤掉以 // 开头的注释行
 const raw = `
-72小时后。
-[目的地名称]，街角的一家咖啡馆。
+本次旅程结束。
+但是我们的故事没有终点。
 `
 
 export const transitionPageText = raw

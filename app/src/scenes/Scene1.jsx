@@ -1,181 +1,107 @@
-import { useState, useEffect } from 'react'
+import { useState, useRef, useCallback, useEffect } from 'react'
 import './Scene1.css'
-import { questions } from '../data/questions'
-import Question from '../components/Question'
-import TransitionScene from './TransitionScene'
-import Scene2 from './Scene2'
+import CropModal from '../components/CropModal'
 
-const IMG_BG = '/images/场景1底图.png'
-const IMG_BOARD_1 = '/images/背板1图片.png'
-const IMG_BOARD_2 = '/images/背板2图片.png'
-const IMG_STICKY = '/images/便签.png'
-const IMG_INDEX_PREV = '/images/索引(上一页).png'
-const IMG_INDEX_NEXT = '/images/索引(下一页).png'
-const IMG_STAMP = '/images/通过盖章.png'
+const SLOT_LABELS = {
+  persona: '图片1',
+  polaroid1: '拍立得图片1',
+  polaroid2: '拍立得图片2',
+  postcard: '明信片图片',
+}
 
-export default function Scene1() {
-  const [page, setPage] = useState(1)
-  const [selectedOptions, setSelectedOptions] = useState(
-    Array(questions.length).fill(null)
-  )
-  const [stamped, setStamped] = useState(false)
-  const [showGuide, setShowGuide] = useState(true)
-  const [phase, setPhase] = useState('survey') // 'survey' | 'transition' | 'scene2'
+const SLOT_CROP = {
+  persona: { w: 250, h: 250 },
+  polaroid1: { w: 250, h: 250 },
+  polaroid2: { w: 250, h: 250 },
+  postcard: { w: 215, h: 200 },
+}
 
-  // 盖章后1秒自动进入过渡页
-  useEffect(() => {
-    if (stamped) {
-      const timer = setTimeout(() => setPhase('transition'), 1000)
-      return () => clearTimeout(timer)
+export default function Scene1({ onComplete }) {
+  const [ocName, setOcName] = useState('')
+  const [personaImage, setPersonaImage] = useState(null)
+  const [polaroid1Image, setPolaroid1Image] = useState(null)
+  const [polaroid2Image, setPolaroid2Image] = useState(null)
+  const [postcardImage, setPostcardImage] = useState(null)
+  const [activeSlot, setActiveSlot] = useState(null)
+
+  const allReady = ocName.trim() && personaImage && polaroid1Image && polaroid2Image && postcardImage
+
+  const handleCropConfirm = (dataUrl) => {
+    switch (activeSlot) {
+      case 'persona': setPersonaImage(dataUrl); break
+      case 'polaroid1': setPolaroid1Image(dataUrl); break
+      case 'polaroid2': setPolaroid2Image(dataUrl); break
+      case 'postcard': setPostcardImage(dataUrl); break
     }
-  }, [stamped])
+    setActiveSlot(null)
+  }
 
-  const handleSelect = (index, option) => {
-    setSelectedOptions((prev) => {
-      const next = [...prev]
-      next[index] = next[index] === option ? null : option
-      return next
+  const handleStart = () => {
+    if (!allReady) return
+    onComplete?.({
+      ocName: ocName.trim(),
+      personaImage,
+      polaroid1Image,
+      polaroid2Image,
+      postcardImage,
     })
   }
 
-  const handlePrev = () => {
-    setPage((p) => Math.max(1, p - 1))
-    setStamped(false)
-  }
-  const handleNext = () => {
-    setPage((p) => Math.min(2, p + 1))
-    setStamped(false)
-    setShowGuide(false)
-  }
-
-  const allAnswered = selectedOptions.every((opt) => opt !== null)
+  const getImageStatus = (img) => img ? '已导入' : '点击导入'
+  const slots = ['persona', 'polaroid1', 'polaroid2', 'postcard']
+  const imageMap = { persona: personaImage, polaroid1: polaroid1Image, polaroid2: polaroid2Image, postcard: postcardImage }
 
   return (
-    <>
-      {phase === 'transition' && <TransitionScene onComplete={() => setPhase('scene2')} />}
-      {phase === 'scene2' && <Scene2 />}
-      {phase === 'survey' && (
-        <div className="scene1">
-        <img className="scene1__bg" src={IMG_BG} alt="背景" />
+    <div className="scene1-new">
+      <img className="scene1-new__bg" src="./images/场景一底图.png" alt="" />
 
-      <div className="scene1__board-wrap">
-        <img
-          className="scene1__board"
-          src={page === 1 ? IMG_BOARD_1 : IMG_BOARD_2}
-          alt="背板"
-        />
+      <div className="scene1-new__panel">
+        <div className="scene1-new__title">请导入数据</div>
 
-        <div className="scene1__board-content">
-
-          {/* 便签（仅第1页） */}
-          {page === 1 && (
-            <div className="scene1__sticky-note">
-              <img src={IMG_STICKY} alt="便签" />
-              <div className="scene1__persona-box" />
-            </div>
-          )}
-
-          {/* 索引上一页 */}
-          <div className="scene1__index-prev" onClick={handlePrev}>
-            <img src={IMG_INDEX_PREV} alt="索引上一页" />
-          </div>
-
-          {/* 索引下一页 */}
-          <div className="scene1__index-next" onClick={handleNext}>
-            <img src={IMG_INDEX_NEXT} alt="索引下一页" />
-          </div>
-
-          {/* 引导竖字 */}
-          {showGuide && (
-            <div className="scene1__guide">点击切换下一页</div>
-          )}
-
-          {/* 底部长方形（仅第1页） */}
-          {page === 1 && (
-            <div className="scene1__bottom-box">
-              <div className="scene1__text-container">
-                {/* 标题 */}
-                <div className="scene1__text-title">
-                  <span className="main-title">旅社乘客<br />调研表</span>
-                  <span className="sub-text">——————</span>
-                </div>
-                {/* 用户输入 */}
-                <div className="scene1__text-top">
-                  请核对您的车票<br />
-                  本次行程该如何<br />
-                  称呼您？
-                </div>
-                {/* 题目1 */}
-                <div className="scene1__text-question">
-                  <Question
-                    question={questions[0]}
-                    selected={selectedOptions[0]}
-                    onSelect={(opt) => handleSelect(0, opt)}
-                  />
-                </div>
-                {/* 题目2 */}
-                <div className="scene1__text-question">
-                  <Question
-                    question={questions[1]}
-                    selected={selectedOptions[1]}
-                    onSelect={(opt) => handleSelect(1, opt)}
-                  />
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* 第2页内容 */}
-          {page === 2 && (
-            <div className="scene1__bottom-box scene1__bottom-box--page2">
-              <div className="scene1__text-container">
-                {/* 题目3 */}
-                <div className="scene1__text-question">
-                  <Question
-                    question={questions[2]}
-                    selected={selectedOptions[2]}
-                    onSelect={(opt) => handleSelect(2, opt)}
-                  />
-                </div>
-                {/* 题目4 */}
-                <div className="scene1__text-question">
-                  <Question
-                    question={questions[3]}
-                    selected={selectedOptions[3]}
-                    onSelect={(opt) => handleSelect(3, opt)}
-                  />
-                </div>
-                {/* 题目5 */}
-                <div className="scene1__text-question">
-                  <Question
-                    question={questions[4]}
-                    selected={selectedOptions[4]}
-                    onSelect={(opt) => handleSelect(4, opt)}
-                  />
-                </div>
-                {/* 空10% / 盖章提示 */}
-                <div className="scene1__text-empty">
-                  {allAnswered && !stamped && (
-                    <div className="scene1__stamp-hint" onClick={() => setStamped(true)}>
-                      点击并申请盖章
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* 盖章（背板级别，第2页右下角） */}
-          {page === 2 && stamped && (
-            <div className="scene1__stamp-wrap">
-              <img className="scene1__stamp-img" src={IMG_STAMP} alt="盖章" />
-            </div>
-          )}
-
+        {/* OC名字 */}
+        <div className="scene1-new__row">
+          <span className="scene1-new__label">OC名字</span>
+          <input
+            className="scene1-new__input"
+            type="text"
+            placeholder="输入OC名字"
+            value={ocName}
+            onChange={(e) => setOcName(e.target.value)}
+          />
         </div>
+
+        {slots.map(slot => {
+          const img = imageMap[slot]
+          return (
+            <div key={slot} className="scene1-new__row">
+              <span className="scene1-new__label">{SLOT_LABELS[slot]}</span>
+              <span
+                className={`scene1-new__status ${img ? 'scene1-new__status--done' : 'scene1-new__status--pending'}`}
+                onClick={() => setActiveSlot(slot)}
+              >
+                {getImageStatus(img)}
+              </span>
+            </div>
+          )
+        })}
+
+        {/* 开始旅行 */}
+        {allReady && (
+          <div className="scene1-new__start" onClick={handleStart}>
+            开始旅行
+          </div>
+        )}
       </div>
+
+      {/* 裁剪弹窗 */}
+      {activeSlot && (
+        <CropModal
+          cropW={SLOT_CROP[activeSlot].w}
+          cropH={SLOT_CROP[activeSlot].h}
+          onConfirm={handleCropConfirm}
+          onCancel={() => setActiveSlot(null)}
+        />
+      )}
     </div>
-    )}
-    </>
   )
 }

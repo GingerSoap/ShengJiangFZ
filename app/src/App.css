@@ -1,7 +1,7 @@
 /* 外层：居中画布，黑色背景填满窗口 */
 .app-shell {
   width: 100vw;
-  height: 100vh;
+  height: 100dvh;
   overflow: hidden;
   background: #000;
   display: flex;
@@ -9,12 +9,11 @@
   justify-content: center;
 }
 
-/* 内层：393×852 固定画布，等比缩放 */
+/* 内层：393×852 固定画布，JS 控制等比缩放 */
 .app-canvas {
   width: 393px;
   height: 852px;
   flex-shrink: 0;
   overflow: hidden;
   transform-origin: top center;
-  transform: scale(min(calc(100vw / 393), calc(100vh / 852)));
 }

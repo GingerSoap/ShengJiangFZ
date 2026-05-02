@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import './Scene2.css'
-import { ticketText, receiptText } from '../data/scene2Content'
+import { getTicketText, getReceiptText } from '../data/defaultContent'
 
 // 交互页组件
 import TicketInteraction from './TicketInteraction'
@@ -8,34 +8,58 @@ import ReceiptInteraction from './ReceiptInteraction'
 import PolaroidInteraction from './PolaroidInteraction'
 import Polaroid1Interaction from './Polaroid1Interaction'
 import Polaroid2Interaction from './Polaroid2Interaction'
+import PostcardInteraction from './PostcardInteraction'
+import EditScene from './EditScene'
 
-export default function Scene2() {
-  // phase: 'board' | 'ticket-int' | 'receipt-int' | 'polaroid-int' | 'polaroid1-int' | 'polaroid2-int' | 'paper-int'
+export default function Scene2({ ocName, personaImage, polaroid1Image, polaroid2Image, postcardImage, contentData, onSaveContent }) {
+  // phase: 'board' | 'ticket-int' | 'receipt-int' | 'polaroid-int' | 'polaroid1-int' | 'polaroid2-int' | 'postcard-int' | 'transition' | 'paper-int'
   const [phase, setPhase] = useState('board')
   // 小票选中的贴纸（提升状态，两边共享）
   const [selectedStickers, setSelectedStickers] = useState([])
+  // 图表结果（从 TicketInteraction 回传）
+  const [chartResults, setChartResults] = useState({ energyType: 'morning', topPieIdx: 0, topRadarIdx: 0 })
+  const [polaroid2Revealed, setPolaroid2Revealed] = useState(false)
 
   const goTo = (p) => setPhase(p)
   const goBack = () => setPhase('board')
 
+  const ticketText = getTicketText(contentData)
+  const receiptText = getReceiptText(contentData)
+
   // 渲染对应交互页
-  if (phase === 'ticket-int') return <TicketInteraction onBack={goBack} />
+  if (phase === 'ticket-int') return <TicketInteraction onBack={goBack} onChartUpdate={setChartResults} personaImage={personaImage} ocName={ocName} contentData={contentData} />
   if (phase === 'receipt-int') return (
     <ReceiptInteraction
       onBack={goBack}
       selected={selectedStickers}
       onSelectStickers={setSelectedStickers}
+      contentData={contentData}
     />
   )
-  if (phase === 'polaroid-int') return <PolaroidInteraction onBack={goBack} onPolaroid1={() => goTo('polaroid1-int')} onPolaroid2={() => goTo('polaroid2-int')} />
-  if (phase === 'polaroid1-int') return <Polaroid1Interaction onBack={() => goTo('polaroid-int')} />
-  if (phase === 'polaroid2-int') return <Polaroid2Interaction onBack={() => goTo('polaroid-int')} />
+  if (phase === 'polaroid-int') return (
+    <PolaroidInteraction
+      onBack={goBack}
+      onPolaroid1={() => goTo('polaroid1-int')}
+      onPolaroid2={() => goTo('polaroid2-int')}
+      polaroid1Image={polaroid1Image}
+      polaroid2Image={polaroid2Image}
+      polaroid2Revealed={polaroid2Revealed}
+      contentData={contentData}
+    />
+  )
+  if (phase === 'polaroid1-int') return <Polaroid1Interaction onBack={() => goTo('polaroid-int')} onPolaroid2={() => goTo('polaroid2-int')} chartResults={chartResults} selectedStickers={selectedStickers} polaroid1Image={polaroid1Image} ocName={ocName} contentData={contentData} />
+  if (phase === 'polaroid2-int') return <Polaroid2Interaction onBack={() => goTo('polaroid-int')} onPostcard={() => goTo('postcard-int')} polaroid2Image={polaroid2Image} ocName={ocName} polaroid2Revealed={polaroid2Revealed} contentData={contentData} />
+  if (phase === 'postcard-int') return <PostcardInteraction onBack={goBack} onTransition={goBack} onReveal={() => setPolaroid2Revealed(true)} postcardImage={postcardImage} />
+  if (phase === 'edit') return <EditScene onBack={goBack} contentData={contentData} onSave={onSaveContent} />
 
   const receiptTotal = selectedStickers.reduce((acc, s) => acc + s.price, 0)
 
   return (
     <div className="scene2">
-      <div className="scene2__canvas">
+      <div className={`scene2__canvas${polaroid2Revealed ? ' scene2__canvas--revealed' : ''}`}>
+
+        {/* ========== 编辑入口 ========== */}
+        <div className="scene2__edit-btn" onClick={() => goTo('edit')} />
 
         {/* 背景图 */}
         <div className="scene2__bg" />
@@ -100,17 +124,30 @@ export default function Scene2() {
 
         {/* ========== 拍立得1 ========== */}
         <div className="scene2__polaroid-1" onClick={() => goTo('polaroid-int')}>
-          <div className="polaroid-1-base" />
+          <div className="polaroid-1-bg" style={{ backgroundImage: `url(${contentData.imgPolaroidBg})` }} />
+          <div className="polaroid-1-base" style={{ backgroundImage: `url(${contentData.imgPolaroidBg})` }}>
+            {polaroid1Image && <img className="polaroid-1-img" src={polaroid1Image} alt="" />}
+          </div>
           <div className="polaroid-1-frame" />
         </div>
 
         {/* ========== 拍立得2 ========== */}
         <div className="scene2__polaroid-2" onClick={() => goTo('polaroid-int')}>
-          <img className="polaroid-2-img" src="/images/拍立得2默认.png" alt="" />
+          <div className="polaroid-2-bg" style={{ backgroundImage: `url(${contentData.imgTheater2})` }} />
+          <div className="polaroid-2-base" style={{ backgroundImage: `url(${contentData.imgTheater2})` }}>
+            {polaroid2Image && <img className="polaroid-2-img" src={polaroid2Image} alt="" />}
+          </div>
+          <div className="polaroid-2-frame" />
+          <img className="polaroid-2-noise" src="./images/噪点底图.png" alt="" style={{ display: polaroid2Revealed ? 'none' : 'block' }} />
         </div>
 
         {/* ========== 铅笔 ========== */}
         <div className="scene2__pencil" />
+
+        {/* ========== 邮票（揭示后出现） ========== */}
+        {polaroid2Revealed && (
+          <img className="scene2__stamp" src="./images/邮票.png" alt="" onClick={() => goTo('postcard-int')} />
+        )}
 
       </div>
     </div>

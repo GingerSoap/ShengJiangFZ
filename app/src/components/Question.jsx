@@ -1,6 +1,6 @@
 import './Question.css'
 
-const IMG_RED_CIRCLE = '/images/红勾.png'
+const IMG_RED_CIRCLE = './images/红勾.png'
 
 export default function Question({ question, selected, onSelect }) {
   const labels = ['A', 'B', 'C']

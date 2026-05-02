@@ -90,66 +90,89 @@
   pointer-events: none;
 }
 
-/* ====== 贴纸翻页卡片 ====== */
-.sticker-card {
+/* ====== 左侧物品栏 ====== */
+.sticker-panel {
   position: absolute;
-  cursor: pointer;
-  transform-style: preserve-3d;
-  transition: transform 0.3s ease;
-  transform: rotate(var(--rotate, 0deg));
-}
-
-/* 正面：降低饱和度 */
-.sticker-front {
-  display: block;
-  max-width: 120px;  /* 限制最大宽度，防止图片太大占满屏幕，数值可按需调整 */
-  max-height: 120px; /* 限制最大高度，防止细长条的票据过长 */
-  width: auto;
-  height: auto;
-  object-fit: contain; /* 保证原图完整展现，绝不裁切 */
-  filter: saturate(0.3) contrast(0.85);
-  transition: filter 0.3s ease;
-  backface-visibility: hidden;
+  left: 8px;
+  top: 0;
+  width: 155px;
+  bottom: 0;
+  background: rgba(217, 217, 217, 0.25);
+  border: 1px solid #999;
   border-radius: 4px;
-  pointer-events: none;
+  z-index: 14;
+  overflow: hidden;
 }
 
-/* 背面：白色底 + 文字 */
+.sticker-panel-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px;
+  height: 100%;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.sticker-grid-item {
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  transition: border-color 0.2s;
+  flex-shrink: 0;
+  transform: rotate(var(--rotate, 0deg));
+  transform-style: preserve-3d;
+}
+
+.sticker-front {
+  width: 90%;
+  height: 90%;
+  object-fit: contain;
+  filter: saturate(0.3) contrast(0.85);
+  backface-visibility: hidden;
+}
+
 .sticker-back {
   position: absolute;
-  inset: 0;
-  background: #ffffff;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  inset: 2px;
+  background: #fff;
+  border-radius: 2px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: 'ZhaohuaMinA', serif;
-  font-size: 10px;
-  color: #333333;
+  font-size: 15px;
+  color: #333;
   text-align: center;
   padding: 4px;
-  line-height: 14px;
+  line-height: 1.3;
   transform: rotateY(180deg);
   backface-visibility: hidden;
   pointer-events: none;
 }
 
-/* 翻面：容器旋转，无放大 */
-.sticker-card.flipped {
+/* 翻面 */
+.sticker-grid-item.flipped {
   transform: rotateY(180deg) rotate(var(--rotate, 0deg));
 }
 
-/* 选中：放大 */
-.sticker-card.selected {
-  transform: scale(1.12) rotate(var(--rotate, 0deg));
+/* 选中 */
+.sticker-grid-item.selected {
+  border-color: #337987;
 }
 
-/* 翻面+选中：保持翻转，但不放大 */
-.sticker-card.flipped.selected {
+.sticker-grid-item.selected .sticker-front {
+  filter: drop-shadow(0 2px 6px rgba(51,121,135,0.6)) brightness(1.05) saturate(1) contrast(1);
+}
+
+/* 翻面+选中 */
+.sticker-grid-item.flipped.selected {
+  border-color: #337987;
   transform: rotateY(180deg) rotate(var(--rotate, 0deg));
-}
-
-.sticker-card.selected .sticker-front {
-  filter: drop-shadow(0 4px 10px rgba(51,121,135,0.7)) brightness(1.05) saturate(1) contrast(1);
 }

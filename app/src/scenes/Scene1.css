@@ -1,3 +1,4 @@
+/* ========== 共享：夹板/便签等 TicketInteraction 依赖 ========== */
 :root {
   --vw: 1vw;
 }
@@ -17,7 +18,6 @@
   overflow: hidden;
 }
 
-/* 文字容器 */
 .scene1__text-container {
   position: absolute;
   inset: 0;
@@ -26,11 +26,14 @@
   font-size: calc(2.4 * var(--vw));
 }
 
-/* 标题（蓝色） */
+.scene1__text-container > *:not(:last-child) {
+  border-bottom: 1px solid #999;
+}
+
 .scene1__text-title {
   width: 100%;
-  height: 20%;
-  background: rgba(126, 167, 200, 0.2);
+  flex: 1;
+  background: rgba(217, 217, 217, 0.25);
   box-sizing: border-box;
   flex-shrink: 0;
   font-family: 'ZhaoHuaBiaoTi', serif;
@@ -55,11 +58,11 @@
   line-height: 1.2;
 }
 
-/* 用户输入（粉色） */
 .scene1__text-top {
-  width: 100%;
-  height: 20%;
-  background: rgba(200, 126, 167, 0.2);
+  width: 60%;
+  flex: 1;
+  margin-top: -20px;
+  background: rgba(217, 217, 217, 0.25);
   box-sizing: border-box;
   flex-shrink: 0;
   font-family: 'ZhaoHuaBiaoTi', serif;
@@ -69,20 +72,18 @@
   flex-direction: column;
   justify-content: center;
   line-height: 1.2;
-  font-size: calc(3 * var(--vw));
+  font-size: calc(2.3 * var(--vw));
   overflow: hidden;
 }
 
-/* 题目布局（平分两个） */
 .scene1__text-question {
   width: 100%;
   height: 30%;
-  background: rgba(167, 200, 126, 0.2);
+  background: rgba(217, 217, 217, 0.25);
   box-sizing: border-box;
   flex-shrink: 0;
 }
 
-/* 空10% */
 .scene1__text-empty {
   width: 100%;
   height: 10%;
@@ -93,7 +94,6 @@
   justify-content: center;
 }
 
-/* 盖章提示文字 */
 .scene1__stamp-hint {
   font-family: 'ZhaoHuaBiaoTi', serif;
   font-size: calc(2.4 * var(--vw));
@@ -104,7 +104,6 @@
   user-select: none;
 }
 
-/* 引导竖字 */
 .scene1__guide {
   position: absolute;
   left: 8%;
@@ -120,7 +119,6 @@
   pointer-events: none;
 }
 
-/* 背景 */
 .scene1__bg {
   position: absolute;
   inset: 0;
@@ -131,7 +129,6 @@
   display: block;
 }
 
-/* 背板 */
 .scene1__board-wrap {
   position: absolute;
   top: 10%;
@@ -145,13 +142,11 @@
   height: auto;
 }
 
-/* 背板内容层（relative 容器，子元素以此为基准） */
 .scene1__board-content {
   position: absolute;
   inset: 0;
 }
 
-/* 便签 */
 .scene1__sticky-note {
   position: absolute;
   width: 40%;
@@ -169,7 +164,6 @@
   display: block;
 }
 
-/* 便签内矩形：75%高 × 50%宽，居中 */
 .scene1__persona-box {
   position: absolute;
   top: 18%;
@@ -183,7 +177,6 @@
   box-sizing: border-box;
 }
 
-/* 索引上一页 */
 .scene1__index-prev {
   position: absolute;
   width: 2.5%;
@@ -198,7 +191,6 @@
   display: block;
 }
 
-/* 索引下一页 */
 .scene1__index-next {
   position: absolute;
   width: 2.5%;
@@ -213,18 +205,16 @@
   display: block;
 }
 
-/* 底部长方形 */
 .scene1__bottom-box {
   position: absolute;
   width: 40%;
   height: 67.5%;
   left: 20%;
   top: 22.5%;
-  background: rgba(200, 169, 126, 0.2);
+  background: rgba(217, 217, 217, 0.25);
   box-sizing: border-box;
 }
 
-/* 第2页底部长方形 */
 .scene1__bottom-box--page2 {
   height: 67.5%;
 }
@@ -240,7 +230,6 @@
   }
 }
 
-/* 盖章（背板级别） */
 .scene1__stamp-wrap {
   position: absolute;
   right: 16%;
@@ -277,4 +266,201 @@
 
 .scene1__text-question + .scene1__text-question {
   border-top: 1px solid rgba(0,0,0,0.1);
+}
+
+/* ========== 新场景1：数据导入页 ========== */
+.scene1-new {
+  position: relative;
+  width: 393px;
+  height: 852px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.scene1-new__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.scene1-new__panel {
+  position: relative;
+  z-index: 2;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.scene1-new__title {
+  font-family: 'ZhaoHuaBiaoTi', serif;
+  font-size: 28px;
+  color: #32524B;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.scene1-new__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.scene1-new__label {
+  font-family: 'ZhaoHuaBiaoTi', serif;
+  font-size: 18px;
+  color: #3a2a1a;
+  flex-shrink: 0;
+}
+
+.scene1-new__input {
+  flex: 1;
+  border: none;
+  border-bottom: 1px dashed #999;
+  background: transparent;
+  font-family: 'ZhaoHuaBiaoTi', serif;
+  font-size: 16px;
+  color: #3a2a1a;
+  outline: none;
+  padding: 4px 0;
+}
+.scene1-new__input::placeholder {
+  color: #bbb;
+}
+
+.scene1-new__status {
+  font-family: 'ZhaoHuaBiaoTi', serif;
+  font-size: 15px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.scene1-new__status--pending {
+  color: #337987;
+}
+
+.scene1-new__status--done {
+  color: #999;
+}
+
+.scene1-new__start {
+  font-family: 'ZhaoHuaBiaoTi', serif;
+  font-size: 24px;
+  color: #337987;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  margin-top: 20px;
+  animation: glow-breathe 2s ease-in-out infinite;
+}
+
+/* ========== 裁剪弹窗 ========== */
+.scene1-modal-mask {
+  position: absolute;
+  inset: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scene1-modal {
+  background: #fff;
+  border-radius: 8px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.scene1-modal__import-area {
+  border: 2px dashed #337987;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: rgba(51, 121, 135, 0.08);
+  transition: background 0.2s;
+}
+
+.scene1-modal__import-area:hover {
+  background: rgba(51, 121, 135, 0.15);
+}
+
+.scene1-modal__import-text {
+  font-family: 'ZhaoHuaBiaoTi', serif;
+  font-size: 18px;
+  color: #337987;
+}
+
+.scene1-modal__crop-container {
+  position: relative;
+}
+
+.scene1-modal__crop-frame {
+  overflow: hidden;
+  position: relative;
+  cursor: grab;
+  border-radius: 4px;
+}
+
+.scene1-modal__crop-frame:active {
+  cursor: grabbing;
+}
+
+.scene1-modal__crop-img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  user-select: none;
+}
+
+.scene1-modal__crop-border {
+  position: absolute;
+  inset: 0;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+.scene1-modal__controls {
+  display: flex;
+  gap: 20px;
+  margin-top: 8px;
+}
+
+.scene1-modal__btn {
+  font-family: 'ZhaoHuaBiaoTi', serif;
+  font-size: 16px;
+  padding: 10px 28px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.scene1-modal__btn--redo {
+  background: rgba(217, 217, 217, 0.5);
+  color: #666;
+}
+
+.scene1-modal__btn--confirm {
+  background: #337987;
+  color: #fff;
+}
+
+.scene1-modal__btn:hover {
+  opacity: 0.8;
 }
