@@ -26,9 +26,9 @@
   position: absolute;
   left: 2px;
   top: 250px;
-  width: 280px;
-  height: 345px;
-  z-index: 8;
+  width: 260px;
+  height: 325px;
+  z-index: 4;
   pointer-events: none;
   filter: url(#noise-filter);
 }
