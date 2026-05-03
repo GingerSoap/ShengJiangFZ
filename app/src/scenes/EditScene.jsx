@@ -153,6 +153,12 @@ export default function EditScene({ onBack, contentData, onSave }) {
           ))}
         </Section>
 
+        <Section title="拍立得1·自定义文本（可覆盖动态生成）">
+          <TextField label="文本框1（左上）留空则动态生成" value={data.p1Text1} onChange={set('p1Text1')} area />
+          <TextField label="文本框2（中间）留空则动态生成" value={data.p1Text2} onChange={set('p1Text2')} area />
+          <TextField label="文本框3（右下竖排）留空则动态生成" value={data.p1Text3} onChange={set('p1Text3')} area />
+        </Section>
+
         <Section title="拍立得2·选项">
           {[1,2,3].map(i => (
             <TextField key={i} label={`选项${i}`} value={data[`p2Opt${i}`]} onChange={set(`p2Opt${i}`)} />

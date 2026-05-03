@@ -91,6 +91,16 @@ export default function Polaroid1Interaction({ onBack, onPolaroid2, chartResults
   }, [selectedStickers])
 
   const { box1, box2, box3 } = buildText(energyType, sticker, topPieIdx, topRadarIdx, stickerCn, radarPlaces)
+
+  const p1Text1 = contentData.p1Text1?.trim()
+  const p1Text2 = contentData.p1Text2?.trim()
+  const p1Text3 = contentData.p1Text3?.trim()
+  const useCustom = p1Text1 || p1Text2 || p1Text3
+
+  const finalBox1 = p1Text1 ? [p1Text1] : box1
+  const finalBox2 = p1Text2 ? [p1Text2] : box2
+  const finalBox3 = p1Text3 ? [p1Text3] : box3
+
   const locColor = radarPlaces[topRadarIdx]?.color || '#337987'
 
   // opening → open after flip animation (0.8s)
@@ -197,11 +207,11 @@ export default function Polaroid1Interaction({ onBack, onPolaroid2, chartResults
       {/* 内容层 */}
       <div className={contentClass}>
         <div className="p1-text-box p1-text-box--1 p1-text-content">
-          {renderSegments(box1)}
+          {renderSegments(finalBox1)}
           <input className="p1-input" placeholder="留下想法" />
         </div>
         <div className="p1-text-box p1-text-box--2 p1-text-content">
-          {renderSegments(box2)}
+          {renderSegments(finalBox2)}
         </div>
 
         <div className="p1-dot p1-dot--1" />
@@ -217,7 +227,7 @@ export default function Polaroid1Interaction({ onBack, onPolaroid2, chartResults
         <img className="p1-pin p1-pin--tr" src="./images/红色钉子.png" alt="" />
 
         <div className="p1-note-box">
-          {renderSegments(box3)}
+          {renderSegments(finalBox3)}
         </div>
       </div>
 
